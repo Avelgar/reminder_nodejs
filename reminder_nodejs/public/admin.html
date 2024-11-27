@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="reminder.css">
+    <link type="image/x-icon"
+        href="https://images.squarespace-cdn.com/content/v1/524883b7e4b03fcb7c64e24c/1685041480038-AWYM7XXSYNHG53PL43L6/Squarespace+Favicon.jpg?format=1500w"
+        rel="shortcut icon">
+    <link type="Image/x-icon"
+        href="https://images.squarespace-cdn.com/content/v1/524883b7e4b03fcb7c64e24c/1685041480038-AWYM7XXSYNHG53PL43L6/Squarespace+Favicon.jpg?format=1500w"
+        rel="icon">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div style="display: flex; align-items: center">
+                <a href="reminder.html"><img src="logo.png" alt="Логотип" class="logo" id="headerLogo"></a>
+                <h1 class="shimmer-text">REMINDER</h1>
+            </div>
+            <div style="display: flex;">
+                <div>
+                    <button class="theme-button" id="themeToggle"></button>
+                </div>
+                <div>
+                    <a href="reminder.html"><button>Выход</button></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="background-image"></div>
+        <main>
+            <h1>Панель администратора</h1>
+            <p style="font-size: 18px;">
+                Здесь вы можете управлять пользователями и администраторами.
+            </p>
+            <div style="text-align: center; gap:30px;">
+                <button style="width: 300px;" class="openBlockuserForm">Заблокировать пользователя</button>
+                <button style="width: 300px;" class="openAddadminForm">Добавить администратора</button>
+                <a href="user.html"><button style="width: 300px;">Войти как пользователь</button></a>
+            </div>
+
+
+            <div id="Blockuser" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Заблокировать пользователя</h2>
+                    <form id="BlockuserForm">
+                        <label for="email">Электронная почта пользователя</label>
+                        <input type="email" id="email" name="email" required>
+                        <label for="comments">Причина блокировки</label>
+                        <input type="comments" id="comments" name="comments" required></input>
+                        <button type="submit">Заблокировать пользователя</button>
+                    </form>
+                    <div id="registerSuccessMessage" class="success-message">Пользователь успешно заблокирован</div>
+                    <div id="registerErrorMessage" class="error-message">Вы не можете заблокировать другого администратора</div>
+                </div>
+            </div>
+
+
+
+            <div id="Addadmin" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Добавить администратора</h2>
+                    <form id="AddadminForm">
+                        <label for="email">Электронная почта пользователя</label>
+                        <input type="email" id="addadminemail" name="email" required>
+
+                        <button type="submit">Добавить администратора</button>
+                    </form>
+                    <div id="registerSuccessMessage2" class="success-message">Новый администратор успешно добавлен</div>
+                    <div id="registerErrorMessage2" class="error-message">Aдминистратор с этой почтой уже есть в системе</div>
+                    <div id="registerErrorMessage3" class="error-message">Заблокированный пользователь не может стать администратором</div>
+                </div>
+            </div>
+        </main>
+    </section>
+    <button class="scroll-up" onclick="scrollToTop()"></button>
+    <footer>
+        @MKDIR
+    </footer>
+    <script src="scrolltotop.js"></script>
+    <script src="theme.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
