@@ -1,27 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.scroll-up').onclick = scrollToTop;
-
-    document.getElementById("logoutButton").onclick = function() {
-        fetch('/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка выхода');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data.message); // Сообщение об успешном выходе
-            window.location.href = 'reminder.html'; // Перенаправление на страницу напоминаний
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    };
     
     const now = new Date();
     const year = now.getFullYear();
