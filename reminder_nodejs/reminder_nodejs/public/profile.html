@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="reminder.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div style="display: flex; align-items: center">
+                <a href="reminder.html"><img src="logo.png" alt="Логотип" class="logo" id="headerLogo"></a>
+                <h1 class="shimmer-text">REMINDER</h1>
+            </div>
+            <div style="display: flex;">
+                <div>
+                    <button class="theme-button" id="themeToggle"></button>
+                </div>
+                <div>
+                    <a href="user.html"><button>Назад</button></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <main>
+            <div style="display: flex;">
+                <div style="display: inline-block;">
+                    <h1>Мой профиль</h1>
+                    <div style="position: relative;">
+                        <img src="profilelogo.png" id="profilelogo" class="profilelogo">
+                        <div id="profilelogocover" class="hidden">
+                            <label id="profilelogobutton" for="fileupload">Выбор фото</label>  
+                            <input type="file" accept="image/png, image/jpeg" id="fileupload" class="hidden">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div style="text-align: start; margin-left: 20px; margin-top: auto;">
+                    <label for="name">Login</label><br>
+                    <input type="text" id="name" name="name" value="Кирилл" required><br>
+                    <div id="nameError" class="error-message">Пожалуйста, заполните поле "Login".</div><br>
+
+                    <label for="loginEmail">Email</label><br>
+                    <input type="email" id="loginEmail" name="email" value="kir@gmail.com" required><br>
+                    <div id="emailError" class="error-message">Пожалуйста, заполните поле "Email".</div><br>
+
+                    <label for="TGid">Telegram ID</label><br>
+                    <input type="text" id="TGid" name="tgid" value="5252387353" required><br>
+                    <div id="tgidError" class="error-message">Пожалуйста, заполните поле "Telegram ID".</div><br>
+                    
+                    <button onclick="checkFields()">Сохранить изменения</button>
+                </div>
+            </div>
+        </main>
+    </section>
+    <button class="scroll-up" onclick="scrollToTop()"></button>
+    <footer>
+        @MKDIR
+    </footer>
+    <script src="scrolltotop.js"></script>
+    <script src="theme.js"></script>
+    <script src="profile.js"></script>
+</body>
+
+</html>

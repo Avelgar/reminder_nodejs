@@ -1,0 +1,637 @@
+@font-face {
+  font-family: 'MinecraftFont';
+  src: url('minecraft.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #4744ff;
+  border-color: #4744ff;
+}
+
+a:active {
+  color: rgb(96, 131, 248);
+  border-color: rgb(96, 131, 248);
+}
+
+button {
+  width: 150px;
+  min-height: 40px;
+  height: fit-content;
+  background: linear-gradient(rgba(2, 126, 251, 1), rgba(0, 172, 238, 1));
+  color: white;
+  border: 1px solid rgba(0, 172, 238, 1);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  margin-right: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(rgb(255, 255, 255), rgb(132, 203, 231));
+  color: rgba(2, 126, 251, 1);
+  border: 1px solid rgba(2, 126, 251, 1);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-image: url('https://img.freepik.com/premium-vector/blue-landscape-decorated-with-cloud-vector-illustration_969863-231941.jpg?semt=ais_hybrid');
+  background-repeat: no-repeat;
+  /* Не повторяет изображение */
+  background-size: cover;
+  /* Покрывает весь фон */
+  background-position: center;
+  /* Центрирует изображение */
+}
+
+header {
+  background-color: rgba(226, 230, 234, 0.9);
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header-info {
+  text-align: right;
+}
+
+section {
+  display: flex;
+  margin-top: 20px;
+  /* Отступ для фиксированного хедера */
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+main {
+  min-width: 1000px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  min-height: 700px;
+  background-color: rgba(226, 230, 234, 0.9);
+  border-radius: 1%;
+  gap: 30px;
+}
+
+.scroll-up {
+  position: fixed;
+  /* Изменила с absolute на fixed для фиксированного положения */
+  bottom: 100px;
+  right: 20px;
+  width: 50px;
+  /* Ширина кнопки */
+  height: 50px;
+  /* Высота кнопки */
+  border-radius: 50%;
+  /* Делаем кнопку круглой */
+  z-index: 1;
+}
+
+.scroll-up:hover {
+  transform: translateY(-2px);
+  /* Поднимаем кнопку при наведении */
+}
+
+.scroll-up:active {
+  transform: translateY(1px);
+  /* Опускаем кнопку при нажатии */
+}
+
+.scroll-up::before {
+  content: '↑';
+  /* Стрелка вверх */
+  font-size: 24px;
+  /* Размер иконки */
+  display: block;
+  /* Делаем иконку блочным элементом */
+  text-align: center;
+  /* Центрируем текст */
+}
+
+footer {
+  margin-top: auto;
+  padding: 10px;
+  background-color: rgba(226, 230, 234, 0.9);
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+.myprofile {
+  margin: 70px 0 0 40px;
+}
+
+.savechanges {
+  border-radius: 5px;
+  border: 1px;
+  width: 120px;
+  height: 30px;
+}
+
+.profilelogo {
+  width: 100%;
+  height: 150px;
+  border: 2px solid;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+#profilelogocover {
+  position: absolute;
+  background-color: rgba(0,0,0,0.2);
+  top: 0px;
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+#profilelogobutton {
+  display: flex;
+  position: absolute;
+  bottom: 2px;
+  left: 4.5%;
+  width: 150px;
+  min-height: 30px;
+  height: fit-content;
+  background: linear-gradient(rgb(45, 45, 45), rgb(90, 90, 90));
+  color: white;
+  border: 1px solid rgb(90, 90, 90);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  margin-right: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+#profilelogobutton:hover {
+  background: linear-gradient(rgb(255, 255, 255), rgb(135, 135, 135));
+  color: rgb(90, 90, 90);
+  border: 1px solid rgb(45, 45, 45);
+}
+
+label {
+  margin-top: 15px;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #6c63ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+}
+
+select {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+select:focus {
+  border-color: #6c63ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+
+.modal-content {
+  height: fit-content;
+  background-color: #fff;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 5% auto;
+  margin-top: 8%;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 500px;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  position: relative;
+  animation: fadeIn 0.3s;
+  z-index: 4;
+}
+
+form {
+  display: grid;
+  grid-row-gap: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #333;
+  text-align: center;
+}
+
+.modal-content label {
+  margin-top: 15px;
+  color: #555;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.modal-content input:focus {
+  border-color: #6c63ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+}
+
+.modal-content button {
+  width: 100%;
+  margin: 10px auto 0 auto;
+  padding: 12px 20px;
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.modal-content button:hover {
+  background-color: #fff;
+  color: #6c63ff;
+  border: 2px solid #6c63ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.success-message,
+
+.error-message {
+  display: none;
+  margin-top: 20px;
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+.success-message {
+  color: green;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.with-email {
+  text-align: center;
+}
+
+.forgot-password a {
+  color: #6c63ff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.dark-theme {
+  background-color: #333;
+  color: white;
+}
+
+.dark-theme header {
+  background-color: rgba(68, 68, 68, 0.9);
+}
+
+.dark-theme footer {
+  background-color: rgba(68, 68, 68, 0.9);
+}
+
+.dark-theme main {
+  background-color: rgba(68, 68, 68, 0.9);
+  border: none;
+  color: white;
+}
+
+.dark-theme aside {
+  background-color: rgba(68, 68, 68, 0.9);
+}
+
+.dark-theme button {
+  background: rgba(68, 68, 68);
+  color: #ffeb3b;
+  border: 1px solid #000;
+}
+
+.dark-theme button:hover {
+  background: #ffeb3b;
+  color: rgba(68, 68, 68);
+  border: 1px solid #000;
+}
+
+.dark-theme label {
+  color: #ffffff;
+}
+
+.dark-theme input:focus {
+  border-color: #000000;
+  outline: none;
+  box-shadow: 0 0 0 2px #ffeb3b;
+}
+
+.dark-theme .modal-content {
+  background-color: rgba(68, 68, 68);
+  box-shadow: 0 4px 16px #ffeb3b;
+}
+
+.dark-theme .modal-content h2 {
+  color: #ffeb3b;
+}
+
+.dark-theme .modal-content label {
+  color: #ffffff;
+}
+
+.dark-theme .modal-content input:focus {
+  border-color: #000000;
+  outline: none;
+  box-shadow: 0 0 0 2px #ffeb3b;
+}
+
+.dark-theme .forgot-password a {
+  color: #ffeb3b;
+}
+
+.dark-theme select:focus {
+  border-color: #000000;
+  outline: none;
+  box-shadow: 0 0 0 2px #ffeb3b;
+}
+
+
+.theme-button {
+  background: black;
+  color: none;
+  width: 50px;
+  /* Ширина кнопки */
+  height: 50px;
+  /* Высота кнопки */
+  border: none;
+  /* Убираем стандартные границы */
+  border-radius: 50%;
+  /* Делаем круглый */
+  position: relative;
+  /* Для абсолютного позиционирования псевдоэлементов */
+  cursor: pointer;
+  /* Указатель при наведении */
+  outline: none;
+  /* Убираем обводку */
+  transition: background-color 0.3s;
+  /* Плавный переход при наведении */
+}
+
+/* Стили для кнопки солнца */
+.theme-button.sun {
+  background: none;
+  color: none;
+  border: none;
+  background: linear-gradient(rgba(2, 126, 251, 1), rgba(0, 172, 238, 1));
+}
+
+.theme-button.sun:hover {
+  background: none;
+  color: none;
+  border: none;
+  background: linear-gradient(rgb(132, 203, 231), rgb(132, 203, 231));
+}
+
+/* Стили для кнопки луны */
+.theme-button.moon {
+  background: none;
+  color: none;
+  border: none;
+  background-color: #444;
+  /* Цвет фона луны */
+}
+
+.theme-button.moon:hover {
+  background: none;
+  color: none;
+  border: none;
+  background-color: #444;
+  ;
+  /* Цвет фона при наведении */
+  box-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
+}
+
+/* Псевдоэлемент для солнца */
+.theme-button.sun::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  /* Положение по вертикали */
+  left: 10px;
+  /* Положение по горизонтали */
+  width: 30px;
+  /* Размер солнца */
+  height: 30px;
+  /* Размер солнца */
+  background-color: #ffeb3b;
+  /* Цвет солнца */
+  border-radius: 50%;
+  /* Делаем круглый */
+  box-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+  /* Тень для солнца */
+}
+
+/* Псевдоэлемент для луны */
+.theme-button.moon::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  /* Положение по вертикали */
+  left: 5px;
+  /* Положение по горизонтали */
+  width: 40px;
+  /* Размер луны */
+  height: 40px;
+  /* Размер луны */
+  background-color: #ffeb3b;
+  /* Цвет луны */
+  border-radius: 50%;
+  /* Делаем круглый */
+}
+
+/* box-shadow: 0 0 15px rgba(255, 235, 59, 0.5); */
+/* Затемнение для луны */
+.theme-button.moon::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  /* Положение по вертикали */
+  left: 15px;
+  /* Положение по горизонтали */
+  width: 35px;
+  /* Размер затемнения */
+  height: 35px;
+  /* Высота затемнения */
+  background-color: #444;
+  ;
+  /* Цвет затемнения */
+  border-radius: 50%;
+  /* Делаем круглый */
+  z-index: 1;
+  /* Убедимся, что затемнение сверху */
+}
+
+.shimmer-text {
+  font-family: 'MinecraftFont';
+  background: linear-gradient(to right, rgba(2, 126, 251, 1), rgba(0, 172, 238, 1), rgba(2, 126, 251, 1));
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+.dark-theme .shimmer-text {
+  font-family: 'MinecraftFont';
+  background: linear-gradient(to right, rgb(210, 253, 19), rgb(166, 175, 43), rgb(197, 251, 2));
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  from {
+    background-position: -200% center;
+  }
+
+  to {
+    background-position: 200% center;
+  }
+}
