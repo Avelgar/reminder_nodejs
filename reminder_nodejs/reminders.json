@@ -7,7 +7,17 @@
     "telegram_id": null,
     "is_banned": false,
     "is_admin": true,
-    "reminders": []
+    "reminders": [
+      {
+        "id": "1732663715390",
+        "title": "ВУЗ",
+        "text": "Доделать проект",
+        "datetime": "2024-11-28T17:28",
+        "type": "email",
+        "is_active": true,
+        "is_deleted": false
+      }
+    ]
   },
   {
     "user_id": "1732670443436",
@@ -30,20 +40,62 @@
     "reminders": [
       {
         "id": "1732663704788",
-        "title": "ВУЗ",
-        "text": "Доделать проект",
-        "datetime": "2024-11-28T17:28",
-        "type": "telegram",
-        "is_active": true
-    },
-    {
-        "id": "1732663715390",
-        "title": "ВУЗ",
-        "text": "Доделать проект",
-        "datetime": "2024-11-28T17:28",
+        "title": "ВУЗws",
+        "text": "Доделать проектsadsы",
+        "datetime": "2024-12-25T17:28",
         "type": "email",
-        "is_active": true
-    }
+        "is_active": true,
+        "is_deleted": true
+      },
+      {
+        "id": "1732847910821",
+        "title": "Заголовок 4",
+        "text": "bbbbbbbbbbbbb",
+        "datetime": "2025-02-03T05:38",
+        "type": "telegram",
+        "is_active": false,
+        "is_deleted": false
+      }
+    ]
+  },
+  {
+    "user_id": "1732859893608",
+    "login": "sobaka",
+    "email": "lox@yandex.ru",
+    "password": "aboba",
+    "telegram_id": null,
+    "is_banned": false,
+    "is_admin": false,
+    "reminders": [
+      {
+        "id": "1732859958962",
+        "title": "Срочно",
+        "text": "Покакать",
+        "datetime": "2024-11-30T08:59",
+        "type": "email",
+        "is_active": true,
+        "is_deleted": false
+      }
+    ]
+  },
+  {
+    "user_id": "1732867089179",
+    "login": "fea_555",
+    "email": "vladimir.fea555@gmail.com",
+    "password": "qwerty",
+    "telegram_id": null,
+    "is_banned": false,
+    "is_admin": false,
+    "reminders": [
+      {
+        "id": "1732867288257",
+        "title": "Aboba",
+        "text": "abebus",
+        "datetime": "2024-11-30T11:01",
+        "type": "email",
+        "is_active": true,
+        "is_deleted": false
+      }
     ]
   }
 ]

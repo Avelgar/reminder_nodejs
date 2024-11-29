@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.scroll-up').onclick = scrollToTop;
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+    
+    if (userId) {
 var closeBtns = document.getElementsByClassName("close");
 var blockuserModal = document.getElementById("Blockuser");
 var openBlockuserBtns = document.getElementsByClassName("openBlockuserForm");
@@ -70,5 +73,5 @@ document.getElementById("AddadminForm").onsubmit = function (event) {
         registerErrorMessage3.style.display = "none";
     }
 };
-
+    }
 });

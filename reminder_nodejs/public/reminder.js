@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var openCaptchaLinks = document.getElementsByClassName("openCaptchaForm");
     var closeBtns = document.getElementsByClassName("close");
     var CaptchaImg = document.getElementById("CaptchaImg");
-    const registerSuccessMessage = document.getElementById("registerSuccessMessage");
-    const userExistsMessage = document.getElementById("userExistsMessage");
-    const loginErrorMessage = document.getElementById("loginErrorMessage");
     const recoveryMessage = document.getElementById("recoveryMessage");
     const captchaErrorMessage = document.getElementById("captchaErrorMessage");
     
@@ -78,20 +75,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     throw new Error('Login failed');
                 });
             }
-            return response.text();
+            return response.json();
         })
-        .then(message => {
-            if (message === 'Login as admin'){
-                window.location.href = '/admin.html'
+        .then(data => {
+            console.log(data);
+            if (data.message === 'Login successful') {
+                const userId = data.user_id;
+                window.location.href = `/user.html?id=${userId}`;
+            } else if (data.message === 'Login as admin') {
+                const userId = data.user_id;
+                window.location.href = `/admin.html?id=${userId}`;
+            } else {
+                console.log('Unexpected response:', data);
             }
-            else if (message === 'Login successful') {
-                window.location.href = '/user.html';
-            }
-            
         })
         .catch(error => {
             console.error(error);
-        });
+        });        
     };
     
     
@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error(error);
         });
     };
-    
     
 
     document.getElementById("RecoveryForm").onsubmit = function (event) {
