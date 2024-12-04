@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(data);
             if (data.message === 'Login successful') {
                 const userId = data.user_id;
-                window.location.href = `/user.html?id=${userId}`;
+                window.location.href = `/user.html`; //?id=${userId}
             } else if (data.message === 'Login as admin') {
                 const userId = data.user_id;
-                window.location.href = `/admin.html?id=${userId}`;
+                window.location.href = `/admin.html`;
             } else {
                 console.log('Unexpected response:', data);
             }
