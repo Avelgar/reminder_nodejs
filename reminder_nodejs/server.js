@@ -51,7 +51,7 @@ app.post('/reminder.html/register', (req, res) => {
             reminders: []
         };
 
-        users.push(newUser );
+        users.push(newUser);
         fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), err => {
             if (err) return res.status(500).send('Error writing data file');
             res.status(201).send('User registered successfully');
@@ -89,6 +89,29 @@ app.post('/reminder.html/login', (req, res) => {
         if (user.is_admin) {
             return res.status(201).json({message: 'Login as admin', user_id: user.user_id});
         }
+
+        res.status(200).json({ message: 'Login successful', user_id: user.user_id });
+    });
+});
+
+app.post('/admin.html/login', (req, res) => {
+    const { login, password } = req.body;
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        const users = JSON.parse(data || '[]');
+        const user = users.find(u => u.email === login || u.login === login);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        req.session.user = {
+            user_id: user.user_id,
+            login: user.login,
+            email: user.email,
+            is_admin: user.is_admin,
+        };
 
         res.status(200).json({ message: 'Login successful', user_id: user.user_id });
     });
@@ -231,7 +254,7 @@ app.post('/complete-reminder', (req, res) => {
     });
 });
 
-app.put('/repeate-reminder', (req, res) => {
+app.put('/repeat-reminder', (req, res) => {
     if (!req.session.user) {
         return res.status(403).send('Unauthorized');
     }
@@ -262,6 +285,70 @@ app.put('/repeate-reminder', (req, res) => {
         fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
             if (err) return res.status(500).send('Error writing data file');
             res.status(200).json({ message: 'Reminder updated', reminder, email: user.email, telegram_id: user.telegram_id });
+        });
+    });
+});
+
+app.patch('/delete-reminder', (req, res) => {
+    if (!req.session.user) {
+        return res.status(403).send('Unauthorized');
+    }
+
+    const { id } = req.body;
+    const userId = req.session.user.user_id;
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        let users = JSON.parse(data || '[]');
+        const user = users.find(u => u.user_id === userId);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        const reminder = user.reminders.find(r => r.id === id);
+        if (!reminder) {
+            return res.status(404).send('Reminder not found');
+        }
+
+        reminder.is_deleted = true;
+
+        fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
+            if (err) return res.status(500).send('Error writing data file');
+            res.status(200).json({ message: 'Reminder deleted', reminder, is_active: user.is_active });
+        });
+    });
+});
+
+app.patch('/restore-reminder', (req, res) => {
+    if (!req.session.user) {
+        return res.status(403).send('Unauthorized');
+    }
+
+    const { id } = req.body;
+    const userId = req.session.user.user_id;
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        let users = JSON.parse(data || '[]');
+        const user = users.find(u => u.user_id === userId);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        const reminder = user.reminders.find(r => r.id === id);
+        if (!reminder || !reminder.is_deleted) {
+            return res.status(404).send('Reminder not found or not deleted');
+        }
+
+        reminder.is_deleted = false;
+
+        fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
+            if (err) return res.status(500).send('Error writing data file');
+            res.status(200).json({ message: 'Reminder restored', reminder });
         });
     });
 });
