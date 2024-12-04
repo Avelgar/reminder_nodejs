@@ -40,12 +40,12 @@
     "reminders": [
       {
         "id": "1732663704788",
-        "title": "ВУЗws",
-        "text": "Доделать проектsadsы",
+        "title": "ВУЗwsfdsdf",
+        "text": "Доделать проектsadsыaweqwr",
         "datetime": "2024-12-25T17:28",
-        "type": "email",
+        "type": "telegram",
         "is_active": true,
-        "is_deleted": true
+        "is_deleted": false
       },
       {
         "id": "1732847910821",
@@ -55,45 +55,14 @@
         "type": "telegram",
         "is_active": false,
         "is_deleted": false
-      }
-    ]
-  },
-  {
-    "user_id": "1732859893608",
-    "login": "sobaka",
-    "email": "lox@yandex.ru",
-    "password": "aboba",
-    "telegram_id": null,
-    "is_banned": false,
-    "is_admin": false,
-    "reminders": [
+      },
       {
-        "id": "1732859958962",
-        "title": "Срочно",
-        "text": "Покакать",
-        "datetime": "2024-11-30T08:59",
+        "id": "1733325775572",
+        "title": "123",
+        "text": "123",
+        "datetime": "2024-12-21T18:22",
         "type": "email",
-        "is_active": true,
-        "is_deleted": false
-      }
-    ]
-  },
-  {
-    "user_id": "1732867089179",
-    "login": "fea_555",
-    "email": "vladimir.fea555@gmail.com",
-    "password": "qwerty",
-    "telegram_id": null,
-    "is_banned": false,
-    "is_admin": false,
-    "reminders": [
-      {
-        "id": "1732867288257",
-        "title": "Aboba",
-        "text": "abebus",
-        "datetime": "2024-11-30T11:01",
-        "type": "email",
-        "is_active": true,
+        "is_active": false,
         "is_deleted": false
       }
     ]

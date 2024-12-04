@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.message === 'Login successful') {
                 const userId = data.user_id;
                 window.location.href = `/user.html`; //?id=${userId}

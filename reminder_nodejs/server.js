@@ -174,7 +174,6 @@ app.post('/reminders', (req, res) => {
 
         fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), err => {
             if (err) return res.status(500).send('Error writing data file');
-            // Возвращаем новое напоминание вместе с email и telegram_id
             res.status(201).json({
                 reminder: newReminder,
                 email: user.email,
@@ -348,7 +347,7 @@ app.patch('/restore-reminder', (req, res) => {
 
         fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
             if (err) return res.status(500).send('Error writing data file');
-            res.status(200).json({ message: 'Reminder restored', reminder });
+            res.status(200).json({ message: 'Reminder restored', reminder, is_active: user.is_active});
         });
     });
 });
