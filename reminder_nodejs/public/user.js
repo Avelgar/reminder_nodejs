@@ -1,12 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.scroll-up').onclick = scrollToTop;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    // const userId = urlParams.get('id');
-    
-    // if (userId) {
-        // ?id=${userId}
-        fetch(`/reminders`)
+    // const urlParams = new URLSearchParams(window.location.search);
+        fetch(`/load-reminders`)
         .then(response => {
             if (!response.ok) throw new Error('Failed to load reminders');
             return response.json();
@@ -57,9 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="delete">Удалить</button>
                     `;
                     actionsCell.querySelector(".restore").onclick = () => restoreReminder(newRow);
-                    actionsCell.querySelector(".delete").onclick = () => {permanentDeleteReminder(reminder.id);
-                        newRow.remove();
-                    };
+                    actionsCell.querySelector(".delete").onclick = () => permanentDeleteReminder(newRow);
                     deletedRemindersTable.appendChild(newRow);
                 } else if (!reminder.is_active && reminder.is_deleted) {
                     const actionsCell = newRow.insertCell(5);
@@ -68,9 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="delete">Удалить</button>
                     `;
                     actionsCell.querySelector(".restore").onclick = () => restoreReminder(newRow);
-                    actionsCell.querySelector(".delete").onclick = () => {permanentDeleteReminder(reminder.id);
-                        newRow.remove();
-                    };
+                    actionsCell.querySelector(".delete").onclick = () => permanentDeleteReminder(newRow);
                     deletedCompletedTasksTable.appendChild(newRow);
                 }
             });
@@ -102,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const completedTasksTable = document.getElementById("completedTasksTable").getElementsByTagName('tbody')[0];
     const repeatReminderModal = document.getElementById("Repeatreminder");
     const deletereminderModal = document.getElementById("Deletereminder");
+    const Profilebutton = document.getElementById("Profilebutton");
   
     let editIndex = -1;
   
@@ -123,6 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
             resetNewReminderForm();
         }
     });
+
+    Profilebutton.onclick = function () {
+        window.location.href = `/profile.html`;
+    };  
   
     window.onclick = function (event) {
         if (event.target == newreminderModal || event.target == editreminderModal || event.target == repeatReminderModal || event.target == deletereminderModal || event.target == basketModal) {
@@ -150,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: newremindersendmethod
         };
     
-        fetch('/reminders', {
+        fetch('/new-reminder', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -218,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: editreminderMethod
         };
     
-        fetch(`/reminders/${reminderId}`, {
+        fetch(`/edit-reminder/${reminderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -385,10 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
 
             actionsCell.querySelector(".restore").onclick = () => restoreReminder(deletedRow);
-            actionsCell.querySelector(".delete").onclick = () => {
-
-                deletedRow.remove();
-            };
+            actionsCell.querySelector(".delete").onclick = () => permanentDeleteReminder(deletedRow);
             if (data.reminder.is_active === true){ 
                 document.querySelector('#deletedRemindersTable tbody').appendChild(deletedRow);
             } else{
@@ -440,12 +434,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     <button class="complete">Выполнено</button>
                 `;
     
-                // Привязываем обработчики событий
                 actionsCell.querySelector(".edit").onclick = () => openEditModal(restoredRow);
                 actionsCell.querySelector(".delete").onclick = () => deleteReminder(restoredRow);
                 actionsCell.querySelector(".complete").onclick = () => completeReminder(restoredRow);
-    
-                // Добавляем восстановленное напоминание в таблицу
+
                 if (data.reminder.is_active === true) { 
                     document.querySelector('#remindersTable tbody').appendChild(restoredRow);
                 } else {
@@ -461,30 +453,68 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     
+    function permanentDeleteReminder(deletedRow){
+        const reminderId = deletedRow.getAttribute('data-id');
     
-  
 
+        const deleteButton = deletedRow.querySelector(".delete");
+        deleteButton.type = "button";
 
-
-
-
+        fetch('/permanent-delete-reminder', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: reminderId })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            deletedRow.remove();
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Ошибка при удалении напоминания. Попробуйте позже.');
+        });
+    }
+    
     document.getElementById("clearBasket").onclick = function() {
-        fetch('/reminders', {
+
+        fetch('/clear-basket', {
             method: 'DELETE'
         })
-        .then(response => response.text())
-        const reminderBasket = document.querySelector('#BasketForm table:nth-of-type(1) tbody');
-        const completedBasket = document.querySelector('#BasketForm table:nth-of-type(2) tbody');
-
-        while (reminderBasket.firstChild) {
-            reminderBasket.removeChild(reminderBasket.firstChild);
-        }
-
-        while (completedBasket.firstChild) {
-            completedBasket.removeChild(completedBasket.firstChild);
-        }
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.text();
+        })
+        .then(message => {
+            console.log(message); // Выводим сообщение от сервера в консоль
+    
+            const reminderBasket = document.querySelector('#BasketForm table:nth-of-type(1) tbody');
+            const completedBasket = document.querySelector('#BasketForm table:nth-of-type(2) tbody');
+    
+            // Очищаем содержимое таблиц
+            while (reminderBasket.firstChild) {
+                reminderBasket.removeChild(reminderBasket.firstChild);
+            }
+    
+            while (completedBasket.firstChild) {
+                completedBasket.removeChild(completedBasket.firstChild);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Ошибка при очистке корзины. Попробуйте позже.');
+        });
     };
-    // }
+  });
+  
   document.addEventListener('DOMContentLoaded', function () {
     const remindersTable = document.getElementById("remindersTable").getElementsByTagName('tbody')[0];
     const sortSelect = document.getElementById('sortSelect');
@@ -504,5 +534,3 @@ document.addEventListener('DOMContentLoaded', function () {
         rows.forEach(row => remindersTable.appendChild(row));
     });
    });
-  });
-  

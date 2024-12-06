@@ -117,7 +117,7 @@ app.post('/admin.html/login', (req, res) => {
     });
 });
 
-app.get('/reminders', (req, res) => {
+app.get('/load-reminders', (req, res) => {
     const userId = req.query.id || (req.session.user && req.session.user.user_id);
     if (!userId) {
         return res.status(403).send('Unauthorized');
@@ -143,7 +143,7 @@ app.get('/reminders', (req, res) => {
 
 
 
-app.post('/reminders', (req, res) => {
+app.post('/new-reminder', (req, res) => {
     if (!req.session.user) {
         return res.status(403).send('Unauthorized');
     }
@@ -183,7 +183,7 @@ app.post('/reminders', (req, res) => {
     });
 });
 
-app.put('/reminders/:id', (req, res) => {
+app.put('/edit-reminder/:id', (req, res) => {
     if (!req.session.user) {
         return res.status(403).send('Unauthorized');
     }
@@ -352,8 +352,132 @@ app.patch('/restore-reminder', (req, res) => {
     });
 });
 
+app.delete('/clear-basket', (req, res) => {
+    if (!req.session.user) {
+        return res.status(403).send('Unauthorized');
+    }
+
+    const userId = req.session.user.user_id;
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        let users = JSON.parse(data || '[]');
+        const user = users.find(u => u.user_id === userId);
+
+        if (!user) {
+            return res.status(404).send('User  not found');
+        }
+
+        // Фильтруем напоминания, оставляя только те, которые не удалены
+        user.reminders = user.reminders.filter(r => !r.is_deleted);
+
+        fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
+            if (err) return res.status(500).send('Error writing data file');
+            res.status(200).send('Basket cleared');
+        });
+    });
+});
+
+app.get('/profile', (req, res) => {
+    const userId = req.query.id || (req.session.user && req.session.user.user_id);
+    if (!userId) {
+        return res.status(403).send('Unauthorized');
+    }
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        const users = JSON.parse(data || '[]');
+        const user = users.find(u => u.user_id === userId);
+        
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        res.json({
+            login: user.login,
+            email: user.email,
+            telegram_id: user.telegram_id,
+        });
+    });
+});
+
+app.post('/updateTelegramId', (req, res) => {
+    const { telegram_id } = req.body;
+    const userId = req.session.user.user_id; // Предполагается, что вы храните user_id в сессии
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        const users = JSON.parse(data || '[]');
+        const user = users.find(u => u.user_id === userId);
+        if (!user) {
+            return res.status(404).send('User  not found');
+        }
+
+        user.telegram_id = telegram_id; // Обновляем telegram_id
+
+        fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
+            if (err) return res.status(500).send('Error writing data file');
+            res.status(200).send('Telegram ID updated');
+        });
+    });
+});
+
+app.post('/blockUser', (req, res) => {
+    const { email } = req.body;
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        let users = JSON.parse(data || '[]');
+        const user = users.find(u => u.email === email);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.is_admin) {
+            return res.status(403).json({ message: 'User is admin' });
+        }
+
+        user.is_banned = true;
+
+        fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
+            if (err) return res.status(500).send('Error writing data file');
+            res.status(200).json({ message: 'User successfully banned' });
+        });
+    });
+});
+
+app.post('/addAdmin', (req, res) => {
+    const { email } = req.body;
+
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Error reading data file');
+
+        let users = JSON.parse(data || '[]');
+        const user = users.find(u => u.email === email);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.is_banned) {
+            return res.status(403).json({ message: 'User is banned' });
+        }
+
+        user.is_admin = true;
+
+        fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), (err) => {
+            if (err) return res.status(500).send('Error writing data file');
+            res.status(200).json({ message: 'User is admin now' });
+        });
+    });
+});
 
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}/reminder.html`);
 });

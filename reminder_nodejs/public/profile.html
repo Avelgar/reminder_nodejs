@@ -29,33 +29,23 @@
 
     <section>
         <main>
-            <div style="display: flex;">
-                <div style="display: inline-block;">
+            <div style="display: column;">
+                <div style="padding-bottom: 30px;">
                     <h1>Мой профиль</h1>
-                    <div style="position: relative;">
-                        <img src="profilelogo.png" id="profilelogo" class="profilelogo">
-                        <div id="profilelogocover" class="hidden">
-                            <label id="profilelogobutton" for="fileupload">Выбор фото</label>  
-                            <input type="file" accept="image/png, image/jpeg" id="fileupload" class="hidden">
-                        </div>
-                    </div>
-                    
                 </div>
-                <div style="text-align: start; margin-left: 20px; margin-top: auto;">
-                    <label for="name">Login</label><br>
-                    <input type="text" id="name" name="name" value="Кирилл" required><br>
-                    <div id="nameError" class="error-message">Пожалуйста, заполните поле "Login".</div><br>
-
-                    <label for="loginEmail">Email</label><br>
-                    <input type="email" id="loginEmail" name="email" value="kir@gmail.com" required><br>
-                    <div id="emailError" class="error-message">Пожалуйста, заполните поле "Email".</div><br>
-
-                    <label for="TGid">Telegram ID</label><br>
-                    <input type="text" id="TGid" name="tgid" value="5252387353" required><br>
-                    <div id="tgidError" class="error-message">Пожалуйста, заполните поле "Telegram ID".</div><br>
+                <div style="text-align: start;">
+                    <h3 style=" margin-bottom: 10px;"><label for="login">Login:</label><br></h3>
+                    <h3><label id="login" name="login"></label><br></h3> 
                     
-                    <button onclick="checkFields()">Сохранить изменения</button>
-                </div>
+                    <h3 style="margin-top: 10px; margin-bottom: 10px;"><label for="loginEmail">Email:</label><br></h3>
+                    <h3><label id="Email" name="email"></label><br></h3>
+                    
+                    <h3 style="margin-top: 20px; margin-bottom: 20px;"><label for="telegram_id">Telegram ID:</label><br></h3>
+                    <input type="text" id="telegram_id" name="telegram_id"><br>
+                    <div id="telegram_idError" class="error-message" style="display:none;">Пожалуйста, заполните поле "Telegram ID".</div><br>
+                    
+                    <button onclick="checkFields()">Сохранить изменения</button>                    
+                </div>                               
             </div>
         </main>
     </section>

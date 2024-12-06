@@ -1,19 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.scroll-up').onclick = scrollToTop;
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('id');
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const userId = urlParams.get('id');
     
     // if (userId) {
 var closeBtns = document.getElementsByClassName("close");
 var blockuserModal = document.getElementById("Blockuser");
 var openBlockuserBtns = document.getElementsByClassName("openBlockuserForm");
-const registerSuccessMessage = document.getElementById("registerSuccessMessage");
-const registerErrorMessage = document.getElementById("registerErrorMessage");
+const BlockSuccessMessage = document.getElementById("BlockSuccessMessage");
+const BlockUserIsAdminMessage = document.getElementById("BlockUserIsAdminMessage");
+const BlockNoUserMessage = document.getElementById("BlockNoUserMessage");
 
 var addadminModal = document.getElementById("Addadmin");
 var openAddadminBtns = document.getElementsByClassName("openAddadminForm");
-const registerSuccessMessage2 = document.getElementById("registerSuccessMessage2");
-const registerSuccessMessage3 = document.getElementById("registerSuccessMessage3");
+
+const AddAdminSuccessMessage = document.getElementById("AddAdminSuccessMessage");
+const AddAdminNoUserMessage = document.getElementById("AddAdminNoUserMessage");
+const AddAdminIsBannedMessage = document.getElementById("AddAdminIsBannedMessage");
 
 Array.from(closeBtns).forEach(button => {
     button.onclick = function () {
@@ -43,35 +46,95 @@ window.onclick = function (event) {
     }
 }
 
+// const comments = document.getElementById("comments").value;
+
 document.getElementById("BlockuserForm").onsubmit = function (event) {
     event.preventDefault();
     const email = document.getElementById("email").value;
-    const comments = document.getElementById("comments").value;
-    if (email == "admin@gmail.com") {
-        registerErrorMessage.style.display = "block";
-        registerSuccessMessage.style.display = "none";
-    } else {
-        registerSuccessMessage.style.display = "block";
-        registerErrorMessage.style.display = "none";
-    }
+
+    // Скрываем все сообщения перед отправкой
+    BlockUserIsAdminMessage.style.display = "none";
+    BlockSuccessMessage.style.display = "none";
+    BlockNoUserMessage.style.display = "none";
+
+    // Отправка запроса на сервер для блокировки пользователя
+    fetch('/blockUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                if (text.includes('User is admin')) {
+                    BlockSuccessMessage.style.display = "none";
+                    BlockNoUserMessage.style.display = "none";
+                    BlockUserIsAdminMessage.style.display = "block";
+                } else if (text.includes('User not found')) {
+                    BlockUserIsAdminMessage.style.display = "none";
+                    BlockSuccessMessage.style.display = "none";
+                    BlockNoUserMessage.style.display = "block";
+                }
+                throw new Error('Action failed');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        BlockUserIsAdminMessage.style.display = "none";
+        BlockNoUserMessage.style.display = "none";
+        BlockSuccessMessage.style.display = "block";
+    })
+    .catch(error => {
+        console.error(error);
+    }); 
 };
+
+
 
 document.getElementById("AddadminForm").onsubmit = function (event) {
     event.preventDefault();
+
     const email = document.getElementById("addadminemail").value;
-    if (email == "admin@gmail.com") {
-        registerErrorMessage2.style.display = "block";
-        registerErrorMessage3.style.display = "none";
-        registerSuccessMessage2.style.display = "none";
-    } else if (email == "ggadmin@gmail.com") {
-        registerErrorMessage3.style.display = "block";
-        registerErrorMessage2.style.display = "none";
-        registerSuccessMessage2.style.display = "none";
-    } else {
-        registerSuccessMessage2.style.display = "block";
-        registerErrorMessage2.style.display = "none";
-        registerErrorMessage3.style.display = "none";
-    }
+
+    AddAdminSuccessMessage.style.dispay ="none";
+    AddAdminNoUserMessage.style.dispay ="none";
+    AddAdminIsBannedMessage.style.display = "none";
+
+    fetch('/addAdmin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                if (text.includes('User not found')) {
+                    AddAdminIsBannedMessage.style.display = "none";
+                    AddAdminSuccessMessage.style.display = "none";
+                    AddAdminNoUserMessage.style.display = "block";
+                } else if (text.includes('User is banned')) {
+                    AddAdminSuccessMessage.style.display = "none";
+                    AddAdminNoUserMessage.style.display = "none";
+                    AddAdminIsBannedMessage.style.display = "block";
+                }
+                throw new Error('Action failed');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        AddAdminIsBannedMessage.style.display = "none";
+        AddAdminNoUserMessage.style.display = "none";
+        AddAdminSuccessMessage.style.display = "block";
+    })
+    .catch(error => {
+        console.error(error);
+    });
 };
     // }
 });

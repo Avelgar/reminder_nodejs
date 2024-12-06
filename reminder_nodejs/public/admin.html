@@ -53,12 +53,13 @@
                     <form id="BlockuserForm">
                         <label for="email">Электронная почта пользователя</label>
                         <input type="email" id="email" name="email" required>
-                        <label for="comments">Причина блокировки</label>
-                        <input type="comments" id="comments" name="comments" required></input>
+                        <!-- <label for="comments">Причина блокировки</label>
+                        <input type="comments" id="comments" name="comments" required></input> -->
                         <button type="submit">Заблокировать пользователя</button>
                     </form>
-                    <div id="registerSuccessMessage" class="success-message">Пользователь успешно заблокирован</div>
-                    <div id="registerErrorMessage" class="error-message">Вы не можете заблокировать другого администратора</div>
+                    <div id="BlockSuccessMessage" class="success-message">Пользователь успешно заблокирован</div>
+                    <div id="BlockUserIsAdminMessage" class="error-message">Вы не можете заблокировать другого администратора</div>
+                    <div id="BlockNoUserMessage" class="error-message">Пользователь с такой почтой не найден</div>
                 </div>
             </div>
 
@@ -74,9 +75,9 @@
 
                         <button type="submit">Добавить администратора</button>
                     </form>
-                    <div id="registerSuccessMessage2" class="success-message">Новый администратор успешно добавлен</div>
-                    <div id="registerErrorMessage2" class="error-message">Aдминистратор с этой почтой уже есть в системе</div>
-                    <div id="registerErrorMessage3" class="error-message">Заблокированный пользователь не может стать администратором</div>
+                    <div id="AddAdminSuccessMessage" class="success-message">Новый администратор успешно добавлен</div>
+                    <div id="AddAdminIsBannedMessage" class="error-message">Заблокированный пользователь не может стать администратором</div>
+                    <div id="AddAdminNoUserMessage" class="error-message">Пользователь с такой почтой не найден</div>
                 </div>
             </div>
         </main>
